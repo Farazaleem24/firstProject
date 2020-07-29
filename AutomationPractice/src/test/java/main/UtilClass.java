@@ -3,7 +3,7 @@ package main;
 import org.openqa.selenium.WebDriver;
 
 public class UtilClass{
-
+	//^extends SingletonDriver
 	//public UtilClass(WebDriver driver) {
 		//super(driver);
 	//}
