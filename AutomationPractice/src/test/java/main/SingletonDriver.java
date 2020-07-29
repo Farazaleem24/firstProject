@@ -11,43 +11,52 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SingletonDriver {
-	
+
 	public SingletonDriver(WebDriver driver) {
-		this.driver = driver;
+		SingletonDriver.driver = driver;
 	}
-	
-	private WebDriver driver;	
-	
+
+	protected static WebDriver driver = null;
+	private static SingletonDriver driverInstance = null;
+
+
+	public static SingletonDriver getThisClassInstance() {
+		if (driverInstance == null)
+			driverInstance = new SingletonDriver(driver);
+		return driverInstance; 
+	}
+
 	public WebDriver getDriver() {
 		return driver;
 	}
-	
-	
+
+
 	public WebDriver openBrowser(String browser, String url) {
-		
-		if(browser.equalsIgnoreCase("Chrome")) {
-			driver = new ChromeDriver();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			driver.get("https://www.google.com/");
-			driver.navigate().to(url);
-		}
-		else if(browser.equalsIgnoreCase("Chrome")) {
-			driver = new EdgeDriver();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			driver.get("https://www.google.com/");
-			driver.navigate().to(url);
-		}
-		else if(browser.equalsIgnoreCase("Chrome")) {
-			driver = new FirefoxDriver();
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			driver.get("https://www.google.com/");
-			driver.navigate().to(url);
-		}
-		else {
-			System.out.println("Incorrect Driver!!");
+		if(driver==null) {
+			if(browser.equalsIgnoreCase("Chrome")) {
+				driver = new ChromeDriver();
+				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+				driver.manage().window().maximize();
+				driver.get("https://www.google.com/");
+				driver.navigate().to(url);
+			}
+			else if(browser.equalsIgnoreCase("Chrome")) {
+				driver = new EdgeDriver();
+				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+				driver.manage().window().maximize();
+				driver.get("https://www.google.com/");
+				driver.navigate().to(url);
+			}
+			else if(browser.equalsIgnoreCase("Chrome")) {
+				driver = new FirefoxDriver();
+				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+				driver.manage().window().maximize();
+				driver.get("https://www.google.com/");
+				driver.navigate().to(url);
+			}
+			else {
+				System.out.println("Incorrect Driver!!");
+			}
 		}
 		return driver;
 	}
